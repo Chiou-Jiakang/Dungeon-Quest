@@ -139,3 +139,56 @@
 https://github.com/Chiou-Jiakang/Dungeon-Quest
 
 下一階段：M0-E 初始 Commit、Push 與版本一致性驗收。
+
+### M0-E：首次 Commit 與 Push
+
+狀態：完成。
+
+驗收日期：2026-11-25 13:32:20。
+
+初始提交：
+
+    a7289f67971be011fcbb0789501f1b9ff8c54ad1
+
+Commit Message：
+
+    chore: initialize Dungeon Quest project and documentation
+
+完成項目：
+
+- 首次 Git Commit 成功。
+- 首次 Git Push 成功。
+- 本機與遠端 Commit SHA 完全一致。
+- main 正確追蹤 origin/main。
+- Working Tree 為乾淨狀態。
+- 16 個必要檔案已納入版本控制。
+- node_modules 與 dist 未納入版本控制。
+- Git 驗收失敗項目：0。
+
+### M0 初始化總結
+
+完成項目：
+
+- 本機開發環境建置。
+- Phaser 遊戲引擎初始化。
+- 遊戲主選單及地下城原型。
+- 場景切換及滑鼠互動。
+- 七份專案開發文件。
+- 未使用示範素材清理。
+- GitHub Repository 建立。
+- 初始版本控制及一致性驗收。
+
+尚待後續處理：
+
+- JavaScript chunk 容量警告：M8。
+- 文字渲染清晰度：M7。
+- 自動化功能測試：自 M1 開始建立。
+
+目前版本維持 0.0.0 Development Build。
+
+本次文件結案更新須另行 Commit 與 Push，
+初始提交 SHA 僅代表已驗收的開發基準版本。
+
+下一階段：
+
+M1：地下城地圖、玩家移動及碰撞系統。

@@ -42,6 +42,10 @@
 - 建立 GitHub 遠端 Repository。
 - 設定 main 分支及 origin 遠端連線。
 - Git 排除規則及遠端驗收：11/11 通過。
+- 完成首次正式 Git Commit 與 Push。
+- 本機與遠端 Commit SHA 一致。
+- 確認 16 個必要檔案納入版本控制。
+- 完成 M0 專案初始化功能及驗收。
 
 ### Removed
 
