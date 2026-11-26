@@ -42,7 +42,11 @@ flowchart TD
 | src/style.css | 全域樣式與畫面配置 |
 | src/scenes/BootScene.js | 遊戲啟動 |
 | src/scenes/MenuScene.js | 主選單及互動 |
-| src/scenes/DungeonScene.js | 地下城原型呈現 |
+| src/scenes/DungeonScene.js | 地下城場景與關卡資料呈現 |
+| src/data/levels.js | 不可變地圖及關卡配置 |
+| tests/levels.test.js | 地圖資料單元測試 |
+| src/systems/GridMap.js | 地圖座標、地形、通行、相鄰格及畫面座標轉換 |
+| tests/grid-map.test.js | GridMap 單元測試 |
 
 ## 5. 預計新增模組
 
@@ -116,3 +120,19 @@ localStorage 僅提供本機瀏覽器存檔，
 
 正式發布前應檢查遊戲資源容量、載入效能、
 第三方資源授權及瀏覽器相容性。
+
+## M1-B GridMap 實作補充
+
+GridMap 不依賴 Phaser，接受關卡資料及畫面偏移量，驗證矩形地圖、地形、尺寸與偏移，並保存不可變地圖副本。
+
+| 方法 | 行為 |
+| --- | --- |
+| isInBounds(x, y) | 檢查整數格子座標與邊界 |
+| getTile(x, y) | 查詢地形，非法座標回傳 null |
+| isWalkable(x, y) | 僅地板可通行 |
+| isWall(x, y) | 判斷是否為牆壁 |
+| getNeighbors(x, y) | 依上、右、下、左順序取得可通行相鄰格；非法或不可通行起點回傳空陣列 |
+| toWorldPosition(x, y) | 轉換為格子中心的畫面座標；非法座標回傳 null |
+
+DungeonScene 透過 GridMap 查詢地形並繪製地圖，驗證玩家起點並取得玩家畫面座標。
+玩家狀態、移動與碰撞、鍵盤輸入及 A* 尋路仍屬後續開發範圍。

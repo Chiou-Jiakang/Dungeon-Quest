@@ -1,11 +1,12 @@
 import Phaser from "phaser";
+import { FLOOR_01, TILE_TYPES } from "../data/levels.js";
+import GridMap from "../systems/GridMap.js";
 
 /**
  * DungeonScene
- * 地下城遊戲場景。
- *
- * M0：地圖呈現與場景切換測試。
- * M1：加入玩家移動與碰撞系統。
+ * M0: 地圖呈現與場景切換。
+ * M1-A: 獨立關卡資料模組。
+ * M1-B: 整合 GridMap 地圖管理系統。
  */
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
@@ -14,64 +15,58 @@ export default class DungeonScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
-
     this.cameras.main.setBackgroundColor("#101218");
 
-    // 場景標題
+    const level = FLOOR_01;
+    const offsetX = (width - level.width * level.tileSize) / 2;
+    const offsetY = 100;
+
+    // 建立獨立地圖管理物件。
+    this.gridMap = new GridMap(level, { offsetX, offsetY });
+    const grid = this.gridMap;
+
+    // 場景標題。
     this.add
-      .text(width / 2, 38, "DUNGEON - FLOOR 01", {
+      .text(width / 2, 38, level.name.toUpperCase(), {
         fontFamily: "Georgia",
         fontSize: "28px",
         color: "#ead2a2",
       })
       .setOrigin(0.5);
 
-    // 測試用地下城地圖
-    // 0 = 地板
-    // 1 = 牆壁
-    const map = [
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1],
-      [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-      [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ];
-
-    const tileSize = 48;
-
-    const offsetX = (width - map[0].length * tileSize) / 2;
-
-    const offsetY = 100;
-
-    // 使用二維陣列繪製地圖
-    map.forEach((row, y) => {
-      row.forEach((tile, x) => {
-        const color = tile === 1 ? 0x525661 : 0x282c35;
+    // 透過 GridMap 查詢並繪製地形。
+    for (let y = 0; y < grid.height; y++) {
+      for (let x = 0; x < grid.width; x++) {
+        const tile = grid.getTile(x, y);
+        const position = grid.toWorldPosition(x, y);
+        const color = tile === TILE_TYPES.WALL ? 0x525661 : 0x282c35;
 
         this.add
           .rectangle(
-            offsetX + x * tileSize + tileSize / 2,
-            offsetY + y * tileSize + tileSize / 2,
-            tileSize - 2,
-            tileSize - 2,
+            position.x,
+            position.y,
+            grid.tileSize - 2,
+            grid.tileSize - 2,
             color,
           )
           .setStrokeStyle(1, 0x15171c);
-      });
-    });
+      }
+    }
 
-    // 暫時使用藍色方塊代表玩家
-    const playerX = offsetX + tileSize * 1.5;
-    const playerY = offsetY + tileSize * 1.5;
+    // 驗證玩家起始位置，再轉換為畫面座標。
+    const start = level.playerStart;
+    if (!grid.isWalkable(start.x, start.y)) {
+      throw new Error("Invalid player starting position.");
+    }
+    const playerPosition = grid.toWorldPosition(start.x, start.y);
 
+    // 玩家測試圖形（目前尚未加入移動功能）。
     this.add
-      .rectangle(playerX, playerY, 32, 32, 0x4f9bcf)
+      .rectangle(playerPosition.x, playerPosition.y, 32, 32, 0x4f9bcf)
       .setStrokeStyle(2, 0xb4e1ff);
 
     this.add
-      .text(playerX, playerY, "P", {
+      .text(playerPosition.x, playerPosition.y, "P", {
         fontFamily: "Arial",
         fontSize: "18px",
         fontStyle: "bold",
@@ -79,21 +74,16 @@ export default class DungeonScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    // 開發提示
+    // 開發階段提示。
     this.add
-      .text(
-        width / 2,
-        height - 125,
-        "M0 Prototype - Movement will be added in M1.",
-        {
-          fontFamily: "Arial",
-          fontSize: "16px",
-          color: "#a8a8a8",
-        },
-      )
+      .text(width / 2, height - 125, "M1-B: GridMap System Initialized.", {
+        fontFamily: "Arial",
+        fontSize: "16px",
+        color: "#a8a8a8",
+      })
       .setOrigin(0.5);
 
-    // 返回主選單
+    // 返回主選單按鈕。
     const backButton = this.add
       .rectangle(width / 2, height - 65, 220, 46, 0x594326)
       .setStrokeStyle(2, 0xb2935a)
@@ -119,6 +109,13 @@ export default class DungeonScene extends Phaser.Scene {
       this.scene.start("MenuScene");
     });
 
-    console.info("[Dungeon Quest] DungeonScene initialized.");
+    console.info("[Dungeon Quest] GridMap initialized.", {
+      levelId: level.id,
+      width: grid.width,
+      height: grid.height,
+      tileSize: grid.tileSize,
+      playerStart: start,
+      neighbors: grid.getNeighbors(start.x, start.y),
+    });
   }
 }

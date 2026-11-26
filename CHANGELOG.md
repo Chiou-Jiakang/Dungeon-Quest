@@ -11,6 +11,15 @@
 
 ### Added
 
+- M1-A：建立獨立的 levels.js 關卡資料模組。
+- 定義地形類型、關卡尺寸及玩家起始位置。
+- 使用 Object.freeze 保護基礎地圖資料。
+- 導入 Node.js 內建自動化測試。
+- 新增 npm test 指令及六項地圖資料測試。
+- M1-B：建立 GridMap 地圖管理系統與不可變地圖副本。
+- 整合 GridMap 至 DungeonScene，統一地形查詢與畫面座標轉換。
+- 新增 12 項 GridMap 單元測試，累計 18/18 通過。
+
 - 建立 Vanilla JavaScript 與 Vite 專案。
 - 安裝並固定 Phaser 4.2.1。
 - 建立 BootScene、MenuScene、DungeonScene。
@@ -55,6 +64,11 @@
 - 清理後重新建置成功，Exit code 0。
 
 ### Known Issues
+
+- 瀏覽器 favicon.ico 404：缺少網站圖示，預計 M7 處理。
+- AudioContext 自動播放限制警告：音訊功能開發時驗證。
+- 行動裝置模擬畫面有置中偏移現象，預計 M7 檢查。
+- Windows Git LF/CRLF 換行提醒不阻礙本次提交。
 
 - JavaScript 建置檔案超過 500 kB 警告門檻。
 - 部分 PowerShell 報告含編碼及 ANSI 色彩控制字元。

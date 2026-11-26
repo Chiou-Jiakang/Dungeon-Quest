@@ -192,3 +192,64 @@ Commit Message：
 下一階段：
 
 M1：地下城地圖、玩家移動及碰撞系統。
+
+### M1-A：地下城地圖資料模組
+
+日期：2026-11-25。
+
+狀態：完成。
+
+完成項目：
+
+- 建立 src/data/levels.js。
+- 將地圖資料從 DungeonScene 分離。
+- 定義 FLOOR、WALL 地形類型。
+- 建立 11 欄 x 7 列的第一層地下城。
+- 設定玩家起始位置為 (1, 1)。
+- 使用 Object.freeze 保護地圖與關卡配置。
+- 建立 tests/levels.test.js。
+- 新增 npm test 指令。
+
+驗收結果：
+
+- 必要檔案：4/4。
+- JavaScript 語法檢查：3/3。
+- 自動化測試：6/6。
+- 瀏覽器回歸測試：7/7，依開發者操作回報。
+- Production Build：Exit code 0。
+- 建置時間：439 ms。
+- JavaScript 建置容量：1,371.25 kB。
+- Git Diff Check：PASS。
+
+已知警告：
+
+- Vite JavaScript chunk 容量警告。
+- Git LF/CRLF 換行格式提醒。
+
+下一階段：M1-B GridMap 地圖管理系統。
+
+### M1-B：GridMap 地圖管理系統
+
+日期：2026-11-26。
+狀態：功能及技術驗收完成；M1-A、M1-B 集中 Git 提交與遠端驗收待執行。
+
+完成項目：
+
+- 建立 src/systems/GridMap.js 與 tests/grid-map.test.js。
+- 支援地圖資料驗證、地形查詢、邊界及通行判斷、四方向相鄰格與畫面座標轉換。
+- DungeonScene 已整合 GridMap，地圖及玩家起點正常呈現。
+- 排除 GridMap.js 未寫入造成的 default export 錯誤；修復後累計 18 項測試全數通過。
+
+驗收結果（2026-11-26 13:35:38）：
+
+- 必要檔案 6/6、JavaScript 語法 5/5。
+- M1-A 6/6、M1-B 12/12，累計 18/18，失敗、取消、跳過與 todo 均為 0。
+- 瀏覽器初始化、地圖呈現、相鄰格與場景切換正常（截圖及開發者操作回報）。
+- Production Build：Exit code 0；819 ms。
+- JavaScript：1,372.92 kB；gzip：359.16 kB。
+- Git Diff Check（既有追蹤檔案）：PASS；12 個預期變更檔案。
+- main 分支及 M0 基準 fea5243dbeb35afeac4b393572b438e33681dc44 保留。
+
+已知非阻礙性問題：favicon.ico 404、AudioContext 警告、行動裝置模擬畫面置中偏移、Vite chunk 容量警告及 Git LF/CRLF 提醒。
+
+下一階段：完成 M1-A、M1-B 集中 Commit、Push 及遠端 SHA 驗證，再開始 M1-C Player 角色模組。
