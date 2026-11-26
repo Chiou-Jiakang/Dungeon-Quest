@@ -311,3 +311,32 @@ JavaScript 1,374.49 kB，gzip 359.73 kB；chunk 容量警告仍存在。
 
 Git：main，基準 ed4dcfe5b7df30f9bb34a06bc22678a8ae74a1cb，3 個預期變更；既有檔案 Diff Check 通過，新增檔案待 Staging 檢查。
 不包含鍵盤移動、碰撞、動態 HUD 或戰鬥整合測試。
+
+## 18. M1-D MovementSystem 移動與碰撞驗收
+
+測試日期：2026-11-26 14:59:58。
+
+| ID | 測試項目 | 結果 |
+| --- | --- | --- |
+| M1-D01 | 建構子要求 GridMap 實例 | PASS |
+| M1-D02 | 拒絕非法 Player 實例 | PASS |
+| M1-D03 | canMove 不修改角色狀態 | PASS |
+| M1-D04 | 四方向單格移動 | PASS |
+| M1-D05 | 牆壁碰撞保留座標 | PASS |
+| M1-D06 | 四方向地圖邊界限制 | PASS |
+| M1-D07 | 非法方向拒絕且不修改狀態 | PASS |
+| M1-D08 | 死亡玩家禁止移動 | PASS |
+| M1-D09 | 拒絕牆壁起點 | PASS |
+| M1-D10 | 拒絕地圖外起點 | PASS |
+| M1-D11 | 成功移動回傳正確資料 | PASS |
+| M1-D12 | 移動原因常數穩定且不可變 | PASS |
+| M1-D13 | 回傳座標不影響角色內部狀態 | PASS |
+| M1-D14 | 連續移動使用更新後座標 | PASS |
+| M1-D15 | 移動保留角色屬性與獨立狀態 | PASS |
+| M1-D16 | Floor 01、GridMap 與 Player 整合 | PASS |
+
+累計測試 48/48（M1-A 6、M1-B 12、M1-C 14、M1-D 16）；失敗、取消、跳過、todo 均為 0；95.1799 ms；Exit code 0。
+必要檔案 10/10、語法 9/9、Player import 與 MovementSystem default export 檢查通過。
+正式建置：PASS；Exit code 0；440 ms；12 modules transformed。JavaScript 1,374.49 kB，gzip 359.73 kB；chunk 容量警告仍存在。
+MovementSystem 尚未接入 Phaser，建置結果不代表鍵盤輸入或畫面更新已驗收；本階段不包含瀏覽器移動測試。
+Git：main，基準 620aaa4bc6d718611ab059912567a783e77d1e65，兩個預期新增檔案；既有檔案 Diff Check 通過，新增檔案待 Staging 檢查。

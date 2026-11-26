@@ -12,7 +12,7 @@ Dungeon Quest 是一款以 JavaScript、Phaser 與 Vite 開發的
 - 開發起始日期：2026-11-25
 - 目前版本：0.0.0（Development Build）
 - 正式發布目標：v1.0.0
-- 開發狀態：M1-A、M1-B、M1-C 功能驗收完成；M1-D MovementSystem 移動與碰撞待開始
+- 開發狀態：M1-A、M1-B、M1-C、M1-D 功能驗收完成；M1-E WASD 與方向鍵輸入待開始
 - 開發模式：單人獨立開發
 - 遊戲類型：2D 俯視角地下城 RPG
 
@@ -26,7 +26,8 @@ Dungeon Quest 是一款以 JavaScript、Phaser 與 Vite 開發的
 - Node.js 自動化單元測試。
 - GridMap 地圖管理系統：座標邊界、地形查詢、通行判斷、四方向相鄰格與畫面座標轉換。
 - 新增 Player 玩家角色模組與初始狀態顯示：座標、HP、攻擊力、防禦力、等級、經驗值與存活狀態。
-- 地圖、GridMap 與 Player 累計 32 項自動化測試通過。
+- 新增 MovementSystem 格子移動與碰撞規則，支援四方向單格移動、牆壁與邊界判斷；尚未接入鍵盤及畫面更新。
+- 地圖、GridMap、Player 與 MovementSystem 累計 48 項自動化測試通過。
 - 玩家位置的圖形化展示。
 - 地下城與主選單雙向切換。
 - Vite 正式版本建置。

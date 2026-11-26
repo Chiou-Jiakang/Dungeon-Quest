@@ -49,6 +49,8 @@ flowchart TD
 | tests/grid-map.test.js | GridMap 單元測試 |
 | src/entities/Player.js | 玩家資料、座標與生命值管理 |
 | tests/player.test.js | Player 單元測試 |
+| src/systems/MovementSystem.js | 格子移動與碰撞規則 |
+| tests/movement-system.test.js | 移動規則與整合測試 |
 
 ## 5. 預計新增模組
 
@@ -154,3 +156,18 @@ Player 為不依賴 Phaser 的角色資料類別，以 private fields 與 getter
 
 DungeonScene 先以 GridMap 驗證關卡起點，再建立 Player，將格子座標轉為畫面座標並讀取 getter 顯示初始 HUD。每次進入場景建立新 Player。
 座標邊界與牆壁碰撞由後續 MovementSystem 負責；鍵盤輸入、動態 HUD、戰鬥公式、升級及存檔尚未實作。
+
+## M1-D MovementSystem 實作補充
+
+MovementSystem 為獨立於 Phaser 與鍵盤事件的規則層，依賴 GridMap 與 Player。座標皆為格子座標而非畫面像素。
+
+| 方法 | 行為 |
+| --- | --- |
+| constructor(gridMap) | 僅接受 GridMap 實例 |
+| canMove(player, dx, dy) | 查詢合法性，回傳 boolean，不修改角色 |
+| tryMove(player, dx, dy) | 合法時更新 Player 座標，回傳 moved、reason、from、to |
+| #evaluate(player, dx, dy) | 集中驗證 Player、方向、存活、起點、邊界及通行性 |
+
+MOVE_REASONS 為不可變常數：moved、invalid-direction、dead、invalid-origin、out-of-bounds、blocked。
+只接受四方向單格位移，拒絕零位移、斜向、跳格及非整數方向。失敗時座標維持原值；非法 Player 實例拋出 TypeError。
+M1-C 所描述的碰撞責任現已由 MovementSystem 實作；Phaser 鍵盤輸入與動態畫面同步仍待 M1-E、M1-F。

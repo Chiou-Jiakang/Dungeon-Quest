@@ -270,3 +270,18 @@ M1：地下城地圖、玩家移動及碰撞系統。
 - 已知非阻礙性問題延續 M1-B 紀錄，Vite chunk 容量警告仍存在；不視為已修復。
 
 下一階段：完成 M1-C 文件同步、Git Staging、Commit、Push 與遠端 SHA 驗收，再開發 M1-D MovementSystem。
+
+### M1-D：MovementSystem 移動與碰撞系統
+
+日期：2026-11-26。
+前一階段 M1-C 已完成 Commit、Push 與遠端 SHA 驗收：620aaa4bc6d718611ab059912567a783e77d1e65。
+本階段核心規則與技術驗收完成，Git 結案待執行。
+
+- 建立 src/systems/MovementSystem.js（2,264 bytes），實作四方向單格移動、牆壁及邊界限制、死亡及非法起點拒絕。
+- 新增 tests/movement-system.test.js（7,089 bytes），包含 16 項測試及 Floor 01 實際關卡整合測試。
+- 2026-11-26 14:59:58 驗收：必要檔案 10/10、語法 9/9、累計測試 48/48、Build Exit code 0（440 ms）。
+- MovementSystem 尚未接入 Phaser，故本次不將瀏覽器鍵盤移動及畫面更新列為已完成。
+- 變更範圍為兩個新增檔案；既有檔案 Diff Check 通過，新增檔案待 Staging 檢查。
+- 已知非阻礙性問題延續前階段紀錄；Vite chunk 容量警告仍存在。
+
+下一階段：完成 M1-D 文件、Git Staging、Commit、Push 與遠端 SHA 驗收，再進入 M1-E WASD 與方向鍵輸入。

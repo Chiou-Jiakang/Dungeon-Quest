@@ -22,6 +22,8 @@
 - M1-C：新增 Player 角色類別，支援座標管理、生命值、傷害、治療及死亡判斷。
 - DungeonScene 整合 Player 與初始角色資訊顯示。
 - 新增 14 項 Player 單元測試；累計 32/32 通過。
+- M1-D：新增 MovementSystem，驗證單格移動、牆壁、邊界、死亡與非法起點；失敗時保留原座標。
+- 新增 16 項移動與碰撞測試（含 Floor 01 整合）；累計 48/48 通過。鍵盤與畫面更新尚未接入。
 
 - 建立 Vanilla JavaScript 與 Vite 專案。
 - 安裝並固定 Phaser 4.2.1。
