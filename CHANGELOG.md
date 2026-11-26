@@ -19,6 +19,9 @@
 - M1-B：建立 GridMap 地圖管理系統與不可變地圖副本。
 - 整合 GridMap 至 DungeonScene，統一地形查詢與畫面座標轉換。
 - 新增 12 項 GridMap 單元測試，累計 18/18 通過。
+- M1-C：新增 Player 角色類別，支援座標管理、生命值、傷害、治療及死亡判斷。
+- DungeonScene 整合 Player 與初始角色資訊顯示。
+- 新增 14 項 Player 單元測試；累計 32/32 通過。
 
 - 建立 Vanilla JavaScript 與 Vite 專案。
 - 安裝並固定 Phaser 4.2.1。

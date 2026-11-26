@@ -38,7 +38,7 @@
 
 - [x] M1-A：地下城地圖資料模組。
 - [x] M1-B：GridMap 地圖管理系統。
-- [ ] M1-C：Player 角色模組。
+- [x] M1-C：Player 角色模組。
 - [ ] M1-D：MovementSystem 移動與碰撞。
 - [ ] M1-E：WASD 與方向鍵輸入。
 - [ ] M1-F：畫面與遊戲狀態同步。

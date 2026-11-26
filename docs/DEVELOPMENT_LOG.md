@@ -253,3 +253,20 @@ M1：地下城地圖、玩家移動及碰撞系統。
 已知非阻礙性問題：favicon.ico 404、AudioContext 警告、行動裝置模擬畫面置中偏移、Vite chunk 容量警告及 Git LF/CRLF 提醒。
 
 下一階段：完成 M1-A、M1-B 集中 Commit、Push 及遠端 SHA 驗證，再開始 M1-C Player 角色模組。
+
+### M1-C：Player 玩家角色模組
+
+日期：2026-11-26。
+前一階段 M1-A/B 已完成 Commit、Push 與遠端 SHA 驗收：ed4dcfe5b7df30f9bb34a06bc22678a8ae74a1cb。
+本階段功能與技術驗收完成，Git 結案待執行。
+
+- 建立 src/entities/Player.js，提供座標與角色屬性封裝、傷害、治療、存活判斷。
+- 新增 tests/player.test.js 的 14 項測試。
+- DungeonScene 整合 Player 並顯示 LV、HP、ATK、DEF、EXP、座標與存活狀態。
+- 預設角色：LV 1、HP 100/100、ATK 10、DEF 5、EXP 0、起點 (1, 1)。
+- 2026-11-26 14:32:41 驗收：必要檔案 8/8、語法 7/7、累計測試 32/32、Build Exit code 0（805 ms）。
+- 瀏覽器畫面與 Console 初始化資料符合規格；場景返回與重新進入由操作者於文件同步前確認。
+- 變更範圍為 3 個程式與測試檔案，既有檔案 Diff Check 通過。
+- 已知非阻礙性問題延續 M1-B 紀錄，Vite chunk 容量警告仍存在；不視為已修復。
+
+下一階段：完成 M1-C 文件同步、Git Staging、Commit、Push 與遠端 SHA 驗收，再開發 M1-D MovementSystem。

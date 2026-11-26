@@ -278,3 +278,36 @@ Vite chunk 容量警告仍存在，待 M8 優化。
 Git 驗收：12 個預期變更檔案，既有追蹤檔案 Diff Check 通過。
 新增檔案的 Staged Diff Check、Commit、Push 及遠端 SHA 一致性待結案驗收。
 本次不包含玩家移動、碰撞或鍵盤操作測試。
+
+## 17. M1-C Player 玩家角色模組驗收
+
+測試日期：2026-11-26 14:32:41。
+
+| ID | 測試項目 | 結果 |
+| --- | --- | --- |
+| M1-C01 | 預設角色屬性 | PASS |
+| M1-C02 | 自訂角色屬性 | PASS |
+| M1-C03 | 非法初始參數 | PASS |
+| M1-C04 | 合法座標更新 | PASS |
+| M1-C05 | 非法座標不改變狀態 | PASS |
+| M1-C06 | 回傳座標與內部狀態分離 | PASS |
+| M1-C07 | 傷害扣除生命值 | PASS |
+| M1-C08 | 致命傷害與下限 | PASS |
+| M1-C09 | 治療與生命值上限 | PASS |
+| M1-C10 | 死亡後不可直接治療復活 | PASS |
+| M1-C11 | 非法傷害及治療值 | PASS |
+| M1-C12 | 零傷害及零治療 | PASS |
+| M1-C13 | 公開屬性不可直接覆寫 | PASS |
+| M1-C14 | 不同角色實例狀態獨立 | PASS |
+
+累計測試 32/32（M1-A 6、M1-B 12、M1-C 14）；失敗、取消、跳過、todo 均為 0；133.4024 ms；Exit code 0。
+必要檔案 8/8、語法 7/7、Player import 檢查均通過。
+
+瀏覽器：11 x 7 地圖、玩家起點、初始 HUD 與 Console 八項角色屬性均符合截圖。返回主選單、重新進入及初始狀態確認由操作者手動驗收；文件同步腳本不自動檢測瀏覽器。
+Console 有隱藏訊息，先前已知警告不標記為已修復。
+
+正式建置：PASS；Exit code 0；805 ms；12 modules transformed。
+JavaScript 1,374.49 kB，gzip 359.73 kB；chunk 容量警告仍存在。
+
+Git：main，基準 ed4dcfe5b7df30f9bb34a06bc22678a8ae74a1cb，3 個預期變更；既有檔案 Diff Check 通過，新增檔案待 Staging 檢查。
+不包含鍵盤移動、碰撞、動態 HUD 或戰鬥整合測試。

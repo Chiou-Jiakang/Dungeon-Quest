@@ -1,12 +1,14 @@
 import Phaser from "phaser";
 import { FLOOR_01, TILE_TYPES } from "../data/levels.js";
 import GridMap from "../systems/GridMap.js";
+import Player from "../entities/Player.js";
 
 /**
  * DungeonScene
  * M0: 地圖呈現與場景切換。
  * M1-A: 獨立關卡資料模組。
  * M1-B: 整合 GridMap 地圖管理系統。
+ * M1-C: 整合 Player 角色資料與初始狀態顯示。
  */
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
@@ -58,14 +60,18 @@ export default class DungeonScene extends Phaser.Scene {
     if (!grid.isWalkable(start.x, start.y)) {
       throw new Error("Invalid player starting position.");
     }
-    const playerPosition = grid.toWorldPosition(start.x, start.y);
+    // 每次進入地下城都建立新的玩家物件；存檔機制留待後續。
+    this.player = new Player({ x: start.x, y: start.y });
+    const player = this.player;
+    const position = player.getPosition();
+    const playerPosition = grid.toWorldPosition(position.x, position.y);
 
     // 玩家測試圖形（目前尚未加入移動功能）。
-    this.add
+    this.playerSprite = this.add
       .rectangle(playerPosition.x, playerPosition.y, 32, 32, 0x4f9bcf)
       .setStrokeStyle(2, 0xb4e1ff);
 
-    this.add
+    this.playerLabel = this.add
       .text(playerPosition.x, playerPosition.y, "P", {
         fontFamily: "Arial",
         fontSize: "18px",
@@ -74,9 +80,37 @@ export default class DungeonScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
+    // 角色初始狀態：讀取 Player getter，不重複定義數值。
+    // 動態 HUD 同步將於後續階段實作。
+    this.add
+      .text(
+        width / 2,
+        height - 175,
+        `LV ${player.level}  |  HP ${player.hp}/${player.maxHp}  |  ATK ${player.attack}  |  DEF ${player.defense}  |  EXP ${player.exp}`,
+        {
+          fontFamily: "Arial",
+          fontSize: "18px",
+          color: "#dce9e0",
+        },
+      )
+      .setOrigin(0.5);
+
+    this.add
+      .text(
+        width / 2,
+        height - 150,
+        `Position: (${position.x}, ${position.y})  |  ${player.isAlive() ? "ALIVE" : "DEAD"}`,
+        {
+          fontFamily: "Arial",
+          fontSize: "16px",
+          color: "#a8c7e0",
+        },
+      )
+      .setOrigin(0.5);
+
     // 開發階段提示。
     this.add
-      .text(width / 2, height - 125, "M1-B: GridMap System Initialized.", {
+      .text(width / 2, height - 125, "M1-C: Player Entity Initialized.", {
         fontFamily: "Arial",
         fontSize: "16px",
         color: "#a8a8a8",
@@ -116,6 +150,17 @@ export default class DungeonScene extends Phaser.Scene {
       tileSize: grid.tileSize,
       playerStart: start,
       neighbors: grid.getNeighbors(start.x, start.y),
+    });
+
+    console.info("[Dungeon Quest] Player initialized.", {
+      position: player.getPosition(),
+      hp: player.hp,
+      maxHp: player.maxHp,
+      attack: player.attack,
+      defense: player.defense,
+      level: player.level,
+      exp: player.exp,
+      alive: player.isAlive(),
     });
   }
 }

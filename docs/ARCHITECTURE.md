@@ -47,6 +47,8 @@ flowchart TD
 | tests/levels.test.js | 地圖資料單元測試 |
 | src/systems/GridMap.js | 地圖座標、地形、通行、相鄰格及畫面座標轉換 |
 | tests/grid-map.test.js | GridMap 單元測試 |
+| src/entities/Player.js | 玩家資料、座標與生命值管理 |
+| tests/player.test.js | Player 單元測試 |
 
 ## 5. 預計新增模組
 
@@ -136,3 +138,19 @@ GridMap 不依賴 Phaser，接受關卡資料及畫面偏移量，驗證矩形�
 
 DungeonScene 透過 GridMap 查詢地形並繪製地圖，驗證玩家起點並取得玩家畫面座標。
 玩家狀態、移動與碰撞、鍵盤輸入及 A* 尋路仍屬後續開發範圍。
+
+## M1-C Player 實作補充
+
+Player 為不依賴 Phaser 的角色資料類別，以 private fields 與 getter 封裝狀態。
+
+| 方法 | 行為 |
+| --- | --- |
+| constructor(options) | 初始化非負安全整數座標及屬性；maxHp、level 至少為 1，初始 HP 等於 maxHp |
+| getPosition() | 回傳獨立座標物件 |
+| setPosition(x, y) | 驗證座標格式後更新，回傳新座標 |
+| isAlive() | HP 大於 0 為存活 |
+| takeDamage(amount) | 扣除已計算傷害，最低為 0，回傳實際扣除量 |
+| heal(amount) | 不超過 maxHp，死亡時不復活，回傳實際恢復量 |
+
+DungeonScene 先以 GridMap 驗證關卡起點，再建立 Player，將格子座標轉為畫面座標並讀取 getter 顯示初始 HUD。每次進入場景建立新 Player。
+座標邊界與牆壁碰撞由後續 MovementSystem 負責；鍵盤輸入、動態 HUD、戰鬥公式、升級及存檔尚未實作。
